@@ -57,10 +57,6 @@ jobs:
 
     env:
       Solution_Name: UEFIReader.sln                         # Replace with your solution name, i.e. MyWpfApp.sln.
-      Test_Project_Path: UEFIReader.Tests\UEFIReader.Tests.csproj                 # Replace with the path to your test project, i.e. MyWpfApp.Tests\MyWpfApp.Tests.csproj.
-      Wap_Project_Directory: UEFIReader.Package    # Replace with the Wap project directory relative to the solution, i.e. MyWpfApp.Package.
-      Wap_Project_Path: MyWpf.App.Package\UEFIReader.Package.wapproj                   # Replace with the path to your Wap project, i.e. MyWpf.App.Package\MyWpfApp.Package.wapproj.
-
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -83,11 +79,11 @@ jobs:
 
     # Restore the application to populate the obj folder with RuntimeIdentifiers
     - name: Restore the application
-      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:configuration
+      run: msbuild /t:Restore /p:Configuration=Release
         
      # Execute build
     - name: Execute build
-      run: dotnet $env:Solution_Name build --output=./output
+      run: dotnet build --output=./output --configuration=Release
       
     # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
     - name: Upload build artifacts
